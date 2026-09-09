@@ -1,117 +1,169 @@
 # Sidebrew
 
-Sidebrew is a small internal operations tool for cafes. It automates the daily workflow of checking sales and inventory trends, spotting what changed, and drafting a shareable morning update.
+**A small reporting tool for cafe operations.**
 
-## The problem
+[**Live demo →**](https://sidebrew.vercel.app)
 
-Cafe managers repeatedly do the same manual work:
+Sidebrew was built around a simple question:
 
-Spreadsheet → manual calculations → interpretation → message
+> **What if the daily cafe report didn't have to be written by hand?**
 
-## The solution
+It takes sales data, checks what changed, looks at inventory, and turns
+the useful parts into a short morning brief.
 
-Sidebrew turns that into:
+Built as a one-day prototype for a cafe tech internship application.
 
-CSV → Sidebrew → Morning Brief
+`<img width="679" height="722" alt="Sidebrew dashboard" src="https://github.com/user-attachments/assets/4198ea84-6507-440c-a876-3acdd6765393" />`{=html}
 
-## What is automated
+------------------------------------------------------------------------
 
-- Sales aggregation and KPI calculation
-- Historical baseline comparison (recent 7-day baseline)
-- Explainable anomaly detection
-- Inventory risk estimation and reorder recommendations
-- Shareable morning brief (copy text + PDF export)
+## The idea
 
-## AI usage
+A typical daily reporting routine can look like this:
 
-### Deterministic (always)
+**Sales spreadsheet → calculations → comparisons → inventory check →
+interpretation → report**
 
-- Revenue, orders, AOV, units
-- Historical comparisons
-- Anomaly detection
-- Inventory usage and days remaining estimates
+Sidebrew compresses that into:
 
-### AI-assisted (optional)
+**Sales data → Sidebrew → morning brief**
 
-- Natural-language synthesis of the operational brief from structured analytics
+The point isn't another dashboard. It's removing a small, repetitive
+piece of work.
 
-If no AI key is configured, Sidebrew uses a deterministic fallback brief generator.
+## What it handles
 
-## Tech stack
+-   Daily revenue, orders, average order value, and units sold
+-   Comparisons against a recent 7-day baseline
+-   Detection of unusual changes in sales patterns
+-   Inventory usage and estimated stock risk
+-   A concise operational brief that can be copied or exported as a PDF
+-   CSV import with validation and a preview before processing
 
-- Backend: Python 3.11+, FastAPI, SQLite, SQLAlchemy, Pandas, Pydantic
-- Frontend: React, TypeScript, Vite, Tailwind CSS, Recharts
-- Reports: ReportLab (PDF)
+## Where AI fits
 
-## Synthetic data
+The numbers do not come from an LLM.
 
-The demo includes coherent **synthetic data** for three fictional stores:
+Core calculations and operational signals are deterministic:
 
-- Indiranagar
-- Civil Lines
-- Koregaon Park
+-   Revenue and order metrics
+-   Historical comparisons
+-   Anomaly detection
+-   Inventory estimates
 
-It seeds ~60 days of realistic hourly sales behavior with deliberate operational patterns/anomalies.
+AI is optional and is used only to turn those structured results into a
+more natural-language brief.
 
-## Run locally
+If an AI key isn't available, Sidebrew falls back to a deterministic
+brief generator, so the core workflow still works.
 
-### 1) Backend setup
+## The demo
 
-```bash
+The included demo uses synthetic sales data for three fictional cafes:
+
+-   **Indiranagar**
+-   **Civil Lines**
+-   **Koregaon Park**
+
+The dataset covers roughly 60 days of hourly sales activity, including
+normal patterns and a handful of deliberately introduced anomalies so
+the reporting workflow has something meaningful to find.
+
+## Built with
+
+**Backend**
+
+Python 3.11 · FastAPI · SQLite · SQLAlchemy · Pandas · Pydantic
+
+**Frontend**
+
+React · TypeScript · Vite · Tailwind CSS · Recharts
+
+**Reports**
+
+ReportLab
+
+## Run it locally
+
+### Backend
+
+``` bash
 cd backend
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2) Configure environment
+### Environment
 
-```bash
-cd ..
+From the project root:
+
+``` bash
 cp .env.example .env
 ```
 
-### 3) Start backend
+Add any optional environment variables required by your local setup.
 
-```bash
+### Start the API
+
+``` bash
 PYTHONPATH=backend uvicorn app.main:app --reload --app-dir backend
 ```
 
-### 4) Start frontend
+### Start the frontend
 
-```bash
+In a second terminal:
+
+``` bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### 5) Seed demo data
+### Seed the demo data
 
-On first launch the frontend calls `/api/seed` automatically. You can also seed manually:
+On first launch, the frontend can seed the demo dataset automatically.
 
-```bash
+To seed it manually:
+
+``` bash
 curl -X POST http://localhost:8000/api/seed
 ```
 
-### 6) Tests
+### Run tests
 
-```bash
-cd /path/to/sidebrew
+From the project root:
+
+``` bash
 PYTHONPATH=backend pytest backend/app/tests
 ```
 
-### 7) Frontend build
+### Build the frontend
 
-```bash
+``` bash
 cd frontend
 npm run build
 ```
 
-## Core flow to demo (60–90 seconds)
+## A quick demo
 
-1. Open Sidebrew
-2. View latest Morning Brief
-3. Import CSV (validation + preview + warnings)
-4. Generate updated brief insights
-5. Copy brief text
-6. Export PDF memo
+The intended flow is deliberately short:
+
+1.  Open Sidebrew
+2.  Review the morning brief
+3.  Import a sales CSV
+4.  Let Sidebrew process the data
+5.  Review what changed and what needs attention
+6.  Copy the brief or export it as a PDF
+
+## Deployment
+
+The frontend is deployed on Vercel and the FastAPI backend runs
+separately.
+
+**Live:** [sidebrew.vercel.app](https://sidebrew.vercel.app)
+
+------------------------------------------------------------------------
+
+*Sidebrew is a portfolio prototype, not a production POS or inventory
+system.*
