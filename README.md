@@ -1,4 +1,4 @@
-# Sidebrew
+# Sidebrew☕️
 
 **A small reporting tool for cafe operations.**
 
@@ -11,9 +11,10 @@ Sidebrew was built around a simple question:
 It takes sales data, checks what changed, looks at inventory, and turns
 the useful parts into a short morning brief.
 
-Built as a one-day prototype for a cafe tech internship application.
+Built as a one-day prototype for a demo application.
 
-`<img width="679" height="722" alt="Sidebrew dashboard" src="https://github.com/user-attachments/assets/4198ea84-6507-440c-a876-3acdd6765393" />`{=html}
+<img width="679" height="722" alt="Screenshot 2026-09-09 at 11 55 32 AM" src="https://github.com/user-attachments/assets/06e3316a-aa27-4f06-bb06-6a4ce2628980" />
+
 
 ------------------------------------------------------------------------
 
@@ -27,9 +28,6 @@ interpretation → report**
 Sidebrew compresses that into:
 
 **Sales data → Sidebrew → morning brief**
-
-The point isn't another dashboard. It's removing a small, repetitive
-piece of work.
 
 ## What it handles
 
@@ -59,11 +57,7 @@ brief generator, so the core workflow still works.
 
 ## The demo
 
-The included demo uses synthetic sales data for three fictional cafes:
-
--   **Indiranagar**
--   **Civil Lines**
--   **Koregaon Park**
+The included demo uses synthetic sales data for three fictional cafes.
 
 The dataset covers roughly 60 days of hourly sales activity, including
 normal patterns and a handful of deliberately introduced anomalies so
@@ -83,69 +77,7 @@ React · TypeScript · Vite · Tailwind CSS · Recharts
 
 ReportLab
 
-## Run it locally
 
-### Backend
-
-``` bash
-cd backend
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-### Environment
-
-From the project root:
-
-``` bash
-cp .env.example .env
-```
-
-Add any optional environment variables required by your local setup.
-
-### Start the API
-
-``` bash
-PYTHONPATH=backend uvicorn app.main:app --reload --app-dir backend
-```
-
-### Start the frontend
-
-In a second terminal:
-
-``` bash
-cd frontend
-npm install
-npm run dev
-```
-
-### Seed the demo data
-
-On first launch, the frontend can seed the demo dataset automatically.
-
-To seed it manually:
-
-``` bash
-curl -X POST http://localhost:8000/api/seed
-```
-
-### Run tests
-
-From the project root:
-
-``` bash
-PYTHONPATH=backend pytest backend/app/tests
-```
-
-### Build the frontend
-
-``` bash
-cd frontend
-npm run build
-```
-
-## A quick demo
 
 The intended flow is deliberately short:
 
