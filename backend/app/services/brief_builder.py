@@ -111,6 +111,22 @@ def build_morning_brief(db: Session, store: str | None = None) -> dict:
     except Exception:
         narrative = DeterministicBriefProvider().generate(brief_input)
 
+    # Coffee category detection — items whose category is 'Coffee' or name contains coffee keywords
+    coffee_keywords = {"espresso", "cappuccino", "latte", "flat white", "cold coffee", "americano", "mocha", "iced latte"}
+    coffee_order_count = 0
+    if not current.df.empty:
+        coffee_mask = (
+            current.df["category"].str.lower().str.contains("coffee", na=False)
+            | current.df["item"].str.lower().isin(coffee_keywords)
+        )
+        coffee_order_count = int(current.df.loc[coffee_mask, "quantity"].sum())
+
+    # Busiest hour
+    busiest_hour: str | None = None
+    if current_stats["by_hour"]:
+        best_h = max(current_stats["by_hour"], key=lambda h: current_stats["by_hour"][h])
+        busiest_hour = f"{int(best_h):02d}:00–{int(best_h)+1:02d}:00"
+
     return {
         "generated_at": datetime.now(UTC),
         "synthetic_data_notice": baseline_note,
@@ -121,6 +137,11 @@ def build_morning_brief(db: Session, store: str | None = None) -> dict:
         "chart_series": hourly_rhythm(current.df, baseline.df, baseline_days),
         "inventory_risks": inventory[:6],
         "narrative": narrative,
+        # Extended fields for richer UI
+        "top_products": current_stats["top_products"],  # dict item->quantity, top 5
+        "by_category": current_stats["by_category"],    # dict category->revenue
+        "busiest_hour": busiest_hour,
+        "coffee_order_count": coffee_order_count,
     }
 
 

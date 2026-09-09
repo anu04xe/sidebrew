@@ -2,15 +2,241 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design tokens ─────────────────────────────────────── */
 :root {
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  color: #24211c;
-  background: #f6f2e8;
+  --cream:       #F6F0E7;
+  --paper:       #FFFDF9;
+  --latte:       #E9D8C5;
+  --beige:       #D5BCA5;
+  --caramel:     #B97950;
+  --espresso:    #4A3026;
+  --roast:       #2B1B16;
+  --sage:        #7D9077;
+  --sage-light:  #DDE4D7;
+  --terra:       #B7654D;
+  --terra-light: #F0D9D1;
+}
+
+/* ─── Base ──────────────────────────────────────────────── */
+html {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-image: radial-gradient(rgba(111, 79, 55, 0.05) 0.5px, transparent 0.5px);
-  background-size: 8px 8px;
+  background-color: var(--cream);
+  color: var(--espresso);
 }
+
+/* ─── Typography ────────────────────────────────────────── */
+.label {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--caramel);
+}
+
+/* ─── Section divider ───────────────────────────────────── */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--latte);
+  margin: 0;
+}
+
+/* ─── Buttons ───────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--espresso);
+  color: var(--cream);
+  border: 1px solid var(--roast);
+  padding: 0.55rem 1.4rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(43, 27, 22, 0.22);
+  transition: background-color 0.12s, box-shadow 0.12s, transform 0.08s;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.btn-primary:hover {
+  background-color: var(--roast);
+  box-shadow: 0 2px 8px rgba(43, 27, 22, 0.28);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 3px rgba(43, 27, 22, 0.2);
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--caramel);
+  outline-offset: 2px;
+}
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background-color: transparent;
+  color: var(--espresso);
+  border: 1px solid var(--latte);
+  padding: 0.45rem 1rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.12s, background-color 0.12s, transform 0.08s;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.btn-secondary:hover {
+  border-color: var(--caramel);
+  background-color: rgba(185, 121, 80, 0.06);
+}
+.btn-secondary:active {
+  transform: translateY(1px);
+}
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--caramel);
+  outline-offset: 2px;
+}
+
+/* ─── Progress bar ──────────────────────────────────────── */
+.progress-track {
+  width: 100%;
+  height: 4px;
+  background: var(--latte);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+/* ─── Checklist checkbox ────────────────────────────────── */
+.checklist-checkbox {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--beige);
+  border-radius: 3px;
+  background: var(--paper);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background-color 0.15s;
+  position: relative;
+}
+.checklist-checkbox:hover {
+  border-color: var(--caramel);
+}
+.checklist-checkbox:checked {
+  background-color: var(--sage);
+  border-color: var(--sage);
+}
+.checklist-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  width: 5px;
+  height: 8px;
+  border: 1.5px solid white;
+  border-left: none;
+  border-top: none;
+  transform: rotate(45deg);
+}
+.checklist-checkbox:focus-visible {
+  outline: 2px solid var(--caramel);
+  outline-offset: 2px;
+}
+
+/* ─── Pulsing status dot ────────────────────────────────── */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.pulse-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: pulse-ring 2s ease-out infinite;
+}
+.pulse-ring-caramel::before { background: var(--caramel); }
+.pulse-ring-sage::before    { background: var(--sage); }
+.pulse-ring-terra::before   { background: var(--terra); }
+
+/* ─── Brew animation (step dots) ────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.25; }
+}
+.blink { animation: blink 1s ease-in-out infinite; }
+
+/* ─── Drop zone ─────────────────────────────────────────── */
+.drop-zone {
+  border: 2px dashed var(--latte);
+  background: transparent;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.drop-zone.drag-over {
+  border-color: var(--caramel);
+  background-color: rgba(185, 121, 80, 0.04);
+}
+
+/* ─── Toast slide-in ────────────────────────────────────── */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(6px); }
+}
+.toast-enter { animation: toast-in 0.22s ease forwards; }
+.toast-exit  { animation: toast-out 0.18s ease forwards; }
+
+/* ─── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--latte); border-radius: 3px; }
+
+/* ─── Selection ─────────────────────────────────────────── */
+::selection {
+  background-color: rgba(185, 121, 80, 0.18);
+  color: var(--roast);
+}
+
+/* ─── Number transition ─────────────────────────────────── */
+@keyframes number-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+.number-pop { animation: number-pop 0.4s ease; }

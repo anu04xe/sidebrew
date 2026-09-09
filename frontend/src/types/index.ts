@@ -32,6 +32,11 @@ export type BriefResponse = {
   chart_series: { hour: string; revenue: number; baseline: number }[];
   inventory_risks: InventoryRisk[];
   narrative: string;
+  // Extended fields
+  top_products: Record<string, number>;   // item -> quantity
+  by_category: Record<string, number>;    // category -> revenue
+  busiest_hour: string | null;
+  coffee_order_count: number;
 };
 
 export type ImportResult = {
@@ -52,4 +57,11 @@ export type ImportResult = {
     store: string;
     order_type: string;
   }[];
+};
+
+// Toast notification type
+export type Toast = {
+  id: string;
+  message: string;
+  kind?: "default" | "success" | "warning";
 };
