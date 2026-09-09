@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,9 +11,14 @@ from .routers.meta import router as meta_router
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Sidebrew")
+allowed_origins = ["http://localhost:5173"]
+frontend_origin = os.getenv("FRONTEND_URL")
+if frontend_origin:
+    allowed_origins.append(frontend_origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
